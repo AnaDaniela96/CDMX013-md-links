@@ -1,35 +1,28 @@
-const fs = require('fs');
-const process = require('node:process');
-const  fetch = require('node-fetch');
+//metodos filesystem
+const fs = require('fs')
 
+//funcion de la ruta path
 const validatePath = (path) => {
-    let result = 'no exist';
-    try {
-        if (fs.existsSync(path)){
-            result =  'exist';
-            //aquí deberá validar sí es un archivo md
-            const rut = (path.split(".").pop());
-                if (rut == 'md') {
-                    fs.readFile(path, 'utf-8', (err, data) => {
-                        if (err) {
-                            console.log(err);
-                        } else {
-                            const links = Array.from(data.match(/\[(.+)\]\((https?:.+)\)/ig));
-                            links.forEach(texto => {
-                                const justLink = texto.split("(" ).pop().replace(")", "")
-                                fetch(justLink).then(response => {
-                                    console.log(response.status);
-                                })
-                            })
-                        }
-                    });
-                console.log('Si es un archivo md ');
-        }
-            else {console.log('No es un archivo MD');
+  let result = 'no exist';
+try {
+  //si es valida la ruta el status cambia
+  if (fs.existsSync(path)) {
+    result = 'exist';
+    //valida que sea un archivo md
+    const rut = (path.split(".").pop());
+    if (rut == 'md') {
+      // si es un archivo md. entonces se lee el archivo
+
+      return path
+    }
+      else { console.log('No es un archivo md')
     }}
-} catch(err) {
-    result = err;
+} catch (err) {
+  result = err;
 }
-return result;
+return result; 
 }
-console.log(validatePath(process.argv[2]));
+ 
+module.exports = {
+  validatePath
+}
