@@ -5,6 +5,6 @@
     "node": ">=16.x"
   },
   "dependencies": {
-    "node-fetch": "^2.6.6"
+    "node-fetch": "^2.6.7"
   }
 }

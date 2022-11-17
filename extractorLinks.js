@@ -1,19 +1,13 @@
 const fs = require("fs");
 
-const extractorLinks = (path) => {
-  let LinksV = [];
-  fs.readFile(path, "utf-8", (err, data)=> {
-    if (err) {
-      return err;
-    } else {
-      const links = Array.from(data.match(/\[(.+)\]\((https?:.+)\)/gi));
-      links.map((texto) => {
-        return texto.split("(").pop().replace(")", "");
-      });
-    }
+const extractLink = (path) => {
+  let data = fs.readFileSync(path, "utf-8");
+  const link = Array.from(data.match(/\[(.+)\]\((https?:.+)\)/gi));
+  return link.map((texto) => {
+    return {href: texto.split("(").pop().replace(")", "")}
   });
-  return LinksV;
 };
+
 module.exports = {
-  extractorLinks,
+  extractLink,
 };

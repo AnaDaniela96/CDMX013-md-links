@@ -1,28 +1,16 @@
-//metodos filesystem
-const fs = require('fs')
+const fs = require("fs");
 
 //funcion de la ruta path
-const validatePath = (path) => {
-  let result = 'no exist';
-try {
-  //si es valida la ruta el status cambia
+const isValidPath = (path) => {
   if (fs.existsSync(path)) {
-    result = 'exist';
-    //valida que sea un archivo md
-    const rut = (path.split(".").pop());
-    if (rut == 'md') {
-      // si es un archivo md. entonces se lee el archivo
+    const rut = path.split(".").pop();
+    if (rut == "md") {
+      return true;
+    } 
+  }
+  return false;
+};
 
-      return path
-    }
-      else { console.log('No es un archivo md')
-    }}
-} catch (err) {
-  result = err;
-}
-return result; 
-}
- 
 module.exports = {
-  validatePath
-}
+  isValidPath
+};

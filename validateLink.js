@@ -1,10 +1,23 @@
 const fetch = require("node-fetch");
 
-return fetch(justLink)
-.then((response) => {
-  return { status: response.status };
-  //   console.log(response.status);
-})
-.catch((error) => {
-  return { status: "fail" };
-});
+const validateLinks = (links) => {
+  let liste = links.map((link => {
+    return fetch(link.href)
+    .then((response) => {
+      if (response.status === 200 ){
+        return({
+          href: response.url,
+          status: response.status,
+          word: "ok",
+        });
+    } else {return {status: response.status, word: 'fail'}}
+    })
+  }));
+  return Promise.all(liste)
+};
+
+module.exports = {
+  validateLinks,
+};
+//validateLinks('TESTS.md');
+//validateLinks(process.argv[2]);
